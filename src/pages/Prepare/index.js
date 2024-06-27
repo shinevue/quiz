@@ -2,13 +2,14 @@ import React, { useState, useEffect, version } from "react";
 import { MDBBtn, MDBTypography } from "mdb-react-ui-kit";
 import Select from "react-select";
 import { useNavigate } from "react-router-dom";
-import Alert from "@mui/material/Alert";
 
 import LANG_DATA from "../../consts/LanguagesData.json";
-import SECTION_DATA from "../../consts/BooksSetting.json";
 
 import "./styles.css";
 import SchoolSharpIcon from "@mui/icons-material/SchoolSharp";
+import { GetBooksSetting } from "../../libs/axios";
+
+let SECTION_DATA;
 
 export default function PreparePage(props) {
   const [versionOptions, setVersionOptions] = useState([]);
@@ -18,28 +19,31 @@ export default function PreparePage(props) {
   const [selectedSection, setSelectedSection] = useState({});
 
   useEffect(() => {
-    const previewLang = localStorage.getItem("language");
-    setSelectedLanguage({
-      language: previewLang,
-    });
+    (async () => {
+      SECTION_DATA = await GetBooksSetting();
+      const previewLang = localStorage.getItem("language");
+      setSelectedLanguage({
+        language: previewLang,
+      });
 
-    if (previewLang) {
-      setVersionOptions(
-        LANG_DATA.find((one) => one.language == previewLang).translations
-      );
-    }
-    if (localStorage.getItem("version-short")) {
-      setSelectedVersion({
-        short_name: localStorage.getItem("version-short"),
-        full_name: localStorage.getItem("version-full"),
-      });
-    }
-    if (localStorage.getItem("section-value")) {
-      setSelectedSection({
-        value: localStorage.getItem("section-value"),
-        bible: localStorage.getItem("section-label"),
-      });
-    }
+      if (previewLang) {
+        setVersionOptions(
+          LANG_DATA.find((one) => one.language == previewLang).translations
+        );
+      }
+      if (localStorage.getItem("version-short")) {
+        setSelectedVersion({
+          short_name: localStorage.getItem("version-short"),
+          full_name: localStorage.getItem("version-full"),
+        });
+      }
+      if (localStorage.getItem("section-value")) {
+        setSelectedSection({
+          value: localStorage.getItem("section-value"),
+          bible: localStorage.getItem("section-label"),
+        });
+      }
+    })();
   }, []);
 
   const navigate = useNavigate();

@@ -56,3 +56,21 @@ export const GetLanguages = () => {
 };
 
 export default instance;
+
+export const GetBooksSetting = async () => {
+
+  const res = await axios.get(`/config/BooksSetting.json`);
+  return res.data;
+}
+
+
+export const GetChaptersSetting = async () => {
+  const res = await axios.get(`/config/ChaptersSetting.json`);
+  return res.data;
+}
+
+
+export const GetVersesSetting = async () => {
+  const res = await axios.get(`/config/VersesSetting.json`);
+  return res.data;
+}

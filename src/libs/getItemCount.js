@@ -1,10 +1,11 @@
-import CHPATER from "../consts/ChaptersSetting.json";
-import VERSE from "../consts/VersesSetting.json";
+import { GetChaptersSetting, GetVersesSetting } from "./axios";
+
 import getRandomNumber from "./getRandomNumber";
 
-export const getChapterCounts = (range) => {
+export const getChapterCounts = async (range) => {
+  let CHAPTER = await GetChaptersSetting();
   let result = 5;
-  CHPATER.map((item) => {
+  CHAPTER.map((item) => {
     let node = item.value.split("-").map((one) => +one);
     if (range > node[0] && range < node[1]) {
       let outrange = item.num.split("-").map((one) => +one);
@@ -14,7 +15,8 @@ export const getChapterCounts = (range) => {
   return result;
 };
 
-export const getVerseCounts = (range) => {
+export const getVerseCounts = async (range) => {
+  let VERSE = await GetVersesSetting();
   let result = 5;
   VERSE.map((item) => {
     let node = item.value.split("-").map((one) => +one);
