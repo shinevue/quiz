@@ -197,7 +197,7 @@ export default function Main() {
       .map((_, i) => i + 1)
       .sort((a, b) => 0.5 - Math.random());
     chapterId = chapters[0];
-    const randomChapterLength = getChapterCounts(chapterRange);
+    const randomChapterLength = await getChapterCounts(chapterRange);
     setChapterOptions(
       chapters.slice(0, randomChapterLength).sort((a, b) => a - b)
     );
