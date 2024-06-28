@@ -197,8 +197,9 @@ export default function Main() {
       .map((_, i) => i + 1)
       .sort((a, b) => 0.5 - Math.random());
     chapterId = chapters[0];
+    const randomChapterLength = getChapterCounts(chapterRange);
     setChapterOptions(
-      chapters.slice(0, getChapterCounts(chapterRange)).sort((a, b) => a - b)
+      chapters.slice(0, randomChapterLength).sort((a, b) => a - b)
     );
 
     let randomChapterVerses;
@@ -215,9 +216,11 @@ export default function Main() {
       error: "",
       ans: { ...randomChapterVerses[0], chapter: chapterId, book: bookAns },
     });
+    const randomVerseLength = await getVerseCounts(randomChapterVerses.length);
+
     setVerseOptions(
       randomChapterVerses
-        .slice(0, getVerseCounts(randomChapterVerses.length))
+        .slice(0, randomVerseLength)
         .sort((a, b) => a.verse - b.verse)
     );
     setTimeout(() => {
